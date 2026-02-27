@@ -1,0 +1,49 @@
+services:
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      target: dev
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app:z
+    networks:
+      - backend
+    restart:
+      unless-stopped
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=${USER_POSTGRES}
+      - POSTGRES_PASSWORD=${PASSWORD_POSTGRES}
+      - POSTGRES_DB=${DATABASE_POSTGRES}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart:
+      unless-stopped
+  
+  adminer:
+    container_name: adminer
+    image: adminer:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    restart:
+      unless-stopped
+
+networks:
+  backend:
+    driver: bridge
+  
+volumes:
+  pgdata:
