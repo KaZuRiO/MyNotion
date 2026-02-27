@@ -9,7 +9,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["backend.sln", "backend.sln"]
 COPY ["backend.API/backend.API.csproj", "backend.API/backend.API.csproj"]
-COPY ["backend.Applications/backend.Applications.csproj", "backend.Applications/backend.Applications.csproj"]
+COPY ["backend.Application/backend.Application.csproj", "backend.Application/backend.Application.csproj"]
 COPY ["backend.Domain/backend.Domain.csproj", "backend.Domain/backend.Domain.csproj"]
 COPY ["backend.Infrastructure/backend.Infrastructure.csproj", "backend.Infrastructure/backend.Infrastructure.csproj"]
 RUN dotnet restore "./backend.sln"
@@ -21,7 +21,7 @@ RUN dotnet build "./backend.sln" -c $BUILD_CONFIGURATION -o /app/build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
 ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
-dotnet watch "backend.sln" --project "backend.API"
+ENTRYPOINT ["dotnet", "watch", "run", "--project", "backend.API/backend.API.csproj", "--non-interactive"]
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
