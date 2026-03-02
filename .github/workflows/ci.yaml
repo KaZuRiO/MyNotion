@@ -1,19 +1,70 @@
-name: Hello World
+name: CI Pipeline
 
 on:
   push:
-    branches: [ci/cd]
+    branches: [main, ci/cd]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  hello:
+  secret-scan:
+    name: Secret Detection
     runs-on: self-hosted
     steps:
-      - name: Dire bonjour
-        run: echo "Hello, GitHub Actions!"
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          fetch-depth: 0
 
-      - name: Afficher des infos sur le contexte
-        run: |
-          echo "Repository: \${{ github.repository }}"
-          echo "Branche: \${{ github.ref_name }}"
-          echo "Auteur du commit: \${{ github.actor }}"
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: false
+
+  backend:
+    name: Backend Build & Test
+    runs-on: self-hosted
+    needs: secret-scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore backend/backend.sln
+
+      - name: Build
+        run: dotnet build backend/backend.sln --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test backend/backend.sln --no-build --configuration Release --verbosity normal
+
+  frontend:
+    name: Frontend Build & Test
+    runs-on: self-hosted
+    needs: secret-scan
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Setup Node
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --prefix frontend
+
+      - name: Build
+        run: npm run build --prefix frontend
+
+      - name: Test
+        run: npm run test --prefix frontend

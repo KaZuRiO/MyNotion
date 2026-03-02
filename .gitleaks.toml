@@ -1,0 +1,14 @@
+[allowlist]
+description = "Allowlist for development secrets"
+paths = [
+    "appsettings.json",
+    "appsettings.Development.json",
+    "AppDbContextFactory.cs",
+    "docker-compose.yml",
+    ".env.local"
+]
+regexes = [
+    '''(?i)postgres''',
+    '''(?i)password=postgres''',
+    '''(?i)POSTGRES_PASSWORD=postgres'''
+]
