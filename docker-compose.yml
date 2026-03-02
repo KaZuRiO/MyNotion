@@ -20,6 +20,23 @@ services:
     restart:
       unless-stopped
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      target: dev
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app:z
+      - /app/node_modules
+    networks:
+      - frontend
+      - backend
+    restart:
+      unless-stopped
+  
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -49,6 +66,7 @@ services:
 networks:
   backend:
     driver: bridge
-  
+  frontend:
+    driver: bridge
 volumes:
   pgdata:

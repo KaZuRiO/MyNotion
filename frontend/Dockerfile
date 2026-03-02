@@ -1,9 +1,9 @@
 # =========================================
-# Stage 1: Build the Angular Application
+# Stage 1: Base image with dependencies
 # =========================================
 
 # Use a lightweight DHI Node.js image for building
-FROM dhi.io/node:24-alpine3.22-dev AS builder
+FROM dhi.io/node:24-alpine3.22-dev AS base
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -14,14 +14,30 @@ COPY package.json package-lock.json* ./
 # Install project dependencies using npm ci (ensures a clean, reproducible install)
 RUN --mount=type=cache,target=/root/.npm npm ci
 
+# =========================================
+# Stage 2: Development stage
+# =========================================
+
+FROM base AS dev
+WORKDIR /app
+COPY . .
+EXPOSE 4200
+# Run ng serve with the host 0.0.0.0 to make it accessible outside the container
+CMD ["npm", "start", "--", "--host", "0.0.0.0"]
+
+# =========================================
+# Stage 3: Build stage for production
+# =========================================
+
+FROM base AS builder
+WORKDIR /app
 # Copy the rest of the application source code into the container
 COPY . .
-
 # Build the Angular application
 RUN npm run build 
 
 # =========================================
-# Stage 2: Prepare Nginx to Serve Static Files
+# Stage 4: Prepare Nginx to Serve Static Files
 # =========================================
 
 FROM dhi.io/nginx:1.28.0-alpine3.21-dev AS runner
