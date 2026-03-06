@@ -1,0 +1,20 @@
+using backend.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace backend.Infrastructure.Config;
+
+public class AppDbContext : DbContext
+{
+  public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+  {
+  }
+
+  public DbSet<Page> Pages { get; set; }
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+  }
+}

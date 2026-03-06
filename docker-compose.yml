@@ -13,6 +13,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_WATCH_SUPPRESS_BROWSER_LAUNCH=true
       - DOTNET_USE_POLLING_FILE_WATCHER=true
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${USER_POSTGRES};Password=${PASSWORD_POSTGRES}
     volumes:
       - ./backend:/src:z
     networks:
@@ -30,7 +31,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql
     networks:
       - backend
     restart:
