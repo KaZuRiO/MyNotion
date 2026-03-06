@@ -1,5 +1,5 @@
-namespace backend.Domain.Entities
-{
+namespace backend.Domain.Entities;
+
   public class Page
 
   {
@@ -9,4 +9,3 @@ namespace backend.Domain.Entities
     public string? Icon { get; set; }
   }
 
-}

@@ -1,11 +1,6 @@
-using backend.Domain.Entities;
 using backend.Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;  // For builder.Services
-using Microsoft.Extensions.Configuration;       // For Configuration
-
+using backend.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // --------------------
@@ -13,12 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // --------------------
 
 builder.Services.AddControllers();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    )
-);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
