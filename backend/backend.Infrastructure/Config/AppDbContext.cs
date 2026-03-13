@@ -9,7 +9,11 @@ public class AppDbContext : DbContext
   {
   }
 
-  public DbSet<Page> Pages { get; set; }
+  public DbSet<User> Users => Set<User>();
+  public DbSet<Workspace> Workspaces => Set<Workspace>();
+  public DbSet<Page> Pages => Set<Page>();
+  public DbSet<Role> Roles => Set<Role>();
+  public DbSet<Workspace_User> Workspace_Users => Set<Workspace_User>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
