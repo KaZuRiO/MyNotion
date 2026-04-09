@@ -1,78 +1,35 @@
 namespace backend.API.Controllers;
-
-using Microsoft.EntityFrameworkCore;
+using backend.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
-using backend.Infrastructure.Config;
-using backend.Domain.Entities;
-
-[ApiController]
-[Route("[controller]")]
 public class RolesController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
+{
+  private readonly RoleUseCase _roleUsecase;
 
-  public RolesController(AppDbContext context)
+  public RolesController(RoleUseCase roleUsecase)
   {
-    _context = context;
+    _roleUsecase = roleUsecase;
   }
 
   [HttpGet]
+  public IActionResult Index()
+  {
+    return Ok("Roles API is running");
+  }
 
+  [HttpGet("roles")]
   public async Task<IActionResult> GetRoles()
   {
-    var roles = await _context.Roles.ToListAsync();
-    return Ok(roles);
-  }
-
-  [HttpGet("{id}")]
-  public async Task<IActionResult> GetRole(int id)
-  {
-    var role = await _context.Roles.FindAsync(id);
-
-    if (role == null)
+    try
     {
-      return NotFound();
+      var roles = await _roleUsecase.GetRolesAsync();
+      return Ok(roles);
     }
-
-    return Ok(role);
-  }
-
-  [HttpPost]
-  public async Task<IActionResult> CreateRole(Role role)
-  {
-    _context.Roles.Add(role);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetRole), new { id = role.Id }, role);
-  }
-
-  [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateRole(int id, Role role)
-  {
-    if(id != role.Id)
+    catch (Exception)
     {
-      return BadRequest();
+      return StatusCode(500, "An error occurred while retrieving roles.");
     }
-    _context.Roles.Update(role);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
-  }
-
-  [HttpDelete("{id}")]
-  public async Task<IActionResult> DeleteRole(int id)
-  {
-    var role = await _context.Roles.FindAsync(id);
-
-    if (role == null)
-    {
-      return NotFound();
-    }
-
-    _context.Roles.Remove(role);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
   }
 }

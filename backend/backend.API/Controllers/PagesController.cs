@@ -1,12 +1,14 @@
 namespace backend.API.Controllers;
+
 using Microsoft.AspNetCore.Mvc;
 using backend.Application.UseCases;
 using System.Threading.Tasks;
+using Azure;
+using backend.Application.DTOs.Page;
 
 public class PageController : Controller
 {
   private readonly PageUseCase _pageUsecase;
-
   public PageController(PageUseCase pageUsecase)
   {
     _pageUsecase = pageUsecase;
@@ -16,6 +18,8 @@ public class PageController : Controller
   {
     return View();
   }
+
+  [HttpGet("pages")]
   public async Task<IActionResult> GetPages()
   {
     try
@@ -23,14 +27,78 @@ public class PageController : Controller
       var pages = await _pageUsecase.GetPagesAsync();
       return Ok(pages);
     }
-    catch (Exception ex)
+    catch (Exception)
     {
       // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while retrieving pages.");
     }
   }
-  // public async Task<IActionResult> GetPageById(int id)
-  // {
-  //   return Ok(await _pageUsecase.GetPageByIdAsync(id));
-  // }
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetPageById(int id)
+  {
+    try
+    {
+      var page = await _pageUsecase.GetPageByIdAsync(id);
+      if (page == null)
+      {
+        return NotFound($"Page with ID {id} not found.");
+      }
+      return Ok(page);
+    }
+    catch (Exception)
+    {
+      // Log the exception (ex) here if needed
+      return StatusCode(500, "An error occurred while retrieving the page.");
+    }
+  }
+
+
+[HttpPost("pages")]
+  public async Task<IActionResult> CreatePage([FromBody] CreatePageDto dto)
+  {
+    try
+    {
+      var createdPage = await _pageUsecase.CreatePageAsync(dto);
+      return CreatedAtAction(nameof(GetPageById), new { id = createdPage.Id }, createdPage);
+    }
+    catch (Exception)
+    {
+      // Log the exception (ex) here if needed
+      return StatusCode(500, "An error occurred while creating the page.");
+    }
+  }
+
+  [HttpPut("{id}")]
+  public async Task<IActionResult> UpdatePage(int id, [FromBody] UpdatePageDto dto)
+  {
+    try
+    {
+      var updatedPage = await _pageUsecase.UpdatePageAsync(id, dto);
+      if (updatedPage == null)
+      {
+        return NotFound($"Page with ID {id} not found.");
+      }
+      return Ok(updatedPage);
+    }
+    catch (Exception)
+    {
+      // Log the exception (ex) here if needed
+      return StatusCode(500, "An error occurred while updating the page.");
+    }
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<IActionResult> DeletePage(int id)
+  {
+    try
+    {
+      await _pageUsecase.DeletePageAsync(id);
+      return NoContent();
+    }
+    catch (Exception)
+    {
+      // Log the exception (ex) here if needed
+      return StatusCode(500, "An error occurred while deleting the page.");
+    }
+  }
 }
