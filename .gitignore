@@ -1,1 +1,6 @@
+.vscode/
 .env
+
+# ci/cd
+gitleaks-report.json
+.actrc
