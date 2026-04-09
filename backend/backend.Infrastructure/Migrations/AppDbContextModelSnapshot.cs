@@ -22,46 +22,6 @@ namespace backend.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owner",
-                            Priority = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Admin",
-                            Priority = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Member",
-                            Priority = 1
-                        });
-                });
-
             modelBuilder.Entity("backend.Domain.Entities.Page", b =>
                 {
                     b.Property<int>("Id")
@@ -133,6 +93,46 @@ namespace backend.Infrastructure.Migrations
                             Title = "Getting Started",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             WorkspaceId = 1
+                        });
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Owner",
+                            Priority = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin",
+                            Priority = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Member",
+                            Priority = 1
                         });
                 });
 
@@ -248,8 +248,14 @@ namespace backend.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -271,14 +277,18 @@ namespace backend.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });
@@ -322,7 +332,7 @@ namespace backend.Infrastructure.Migrations
 
             modelBuilder.Entity("backend.Domain.Entities.Workspace_User", b =>
                 {
-                    b.HasOne("Role", "Role")
+                    b.HasOne("backend.Domain.Entities.Role", "Role")
                         .WithMany("Workspace_Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -347,14 +357,14 @@ namespace backend.Infrastructure.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("Role", b =>
-                {
-                    b.Navigation("Workspace_Users");
-                });
-
             modelBuilder.Entity("backend.Domain.Entities.Page", b =>
                 {
                     b.Navigation("ChildPages");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Workspace_Users");
                 });
 
             modelBuilder.Entity("backend.Domain.Entities.User", b =>

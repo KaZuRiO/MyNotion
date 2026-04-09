@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using backend.Domain.Entities;    
+namespace backend.Domain.Entities;
 
 public class Role
 {

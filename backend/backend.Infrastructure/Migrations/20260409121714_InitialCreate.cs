@@ -116,7 +116,9 @@ namespace backend.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     WorkspaceId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,11 +174,11 @@ namespace backend.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Workspace_Users",
-                columns: new[] { "Id", "RoleId", "UserId", "WorkspaceId" },
+                columns: new[] { "Id", "CreatedAt", "RoleId", "UpdatedAt", "UserId", "WorkspaceId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, 1 },
-                    { 2, 2, 2, 1 }
+                    { 1, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
+                    { 2, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
                 });
 
             migrationBuilder.InsertData(

@@ -1,35 +1,44 @@
-# Backend
-
-To launch the local backend:
-
-//--//
+# Backend - Clean Architechture
 
 ## Domain
 
 * Define Entities
 * Define EntitiesRepository (Interface)
-  * Name the function
+* Name the function
 
-    |
+  |
 
-    V
+  V
 
 ## Application
 
-Use case **(cas d’usage)** = **une action que l’utilisateur peut faire dans ton application**
+Define UseCase (InternalLogic) || Define Services (ExternalLogic)
 
-* Define UseCase (InternalLogic) || Define Services (ExternalLogic)
 * Link UseCase to Interface
 * Can add business logic UseCase
 * (CQRS) (Optimize database with sql)
 
+  |
+
+  V
+
+## API
+
+Use to define controllers
+
+* Implement try catch
 
     |
 
     V
 
-
 ## Infrastrucutre
 
+Call database context and link it with function
+
+* Repository
+
+  * Define context
+  * Call method
 * Define context
 * Link context to the application
