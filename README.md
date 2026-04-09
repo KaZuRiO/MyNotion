@@ -2,6 +2,7 @@
 
 ## Angular Architechture
 
+```
 src/
 ├── app/
 │   ├── core/                # Singleton & logique globale
@@ -35,3 +36,4 @@ src/
 ├── assets/
 ├── environments/
 └── main.ts
+```
