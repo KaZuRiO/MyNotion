@@ -13,11 +13,15 @@ jobs:
     runs-on: self-hosted
     permissions:
       contents: read
+      pull-requests: read
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
+
+      - name: Cleanup Gitleaks Temp
+        run: rm -f /tmp/gitleaks.tmp
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7
@@ -35,8 +39,10 @@ jobs:
 
       - name: Setup .NET
         uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309
+        env:
+          DOTNET_INSTALL_DIR: ${{ github.workspace }}/.dotnet
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore dependencies
         run: dotnet restore backend/backend.sln
@@ -58,8 +64,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
