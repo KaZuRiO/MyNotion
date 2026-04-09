@@ -1,76 +1,36 @@
 namespace backend.API.Controllers;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using backend.Application.UseCases;
+using System.Threading.Tasks;
 
-using backend.Infrastructure.Config;
-using backend.Domain.Entities;
+public class PageController : Controller
+{
+  private readonly PageUseCase _pageUsecase;
 
-[ApiController]
-[Route("[controller]")]
-public class PagesController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
-
-  public PagesController(AppDbContext context)
+  public PageController(PageUseCase pageUsecase)
   {
-    _context = context;
+    _pageUsecase = pageUsecase;
   }
 
-  [HttpGet]
+  public IActionResult Index()
+  {
+    return View();
+  }
   public async Task<IActionResult> GetPages()
   {
-    var pages = await _context.Pages.ToListAsync();
-    return Ok(pages);
-  }
-
-  [HttpGet("{id}")]
-  public async Task<IActionResult> GetPage(int id)
-  {
-    var page = await _context.Pages.FindAsync(id);
-
-    if (page == null)
+    try
     {
-      return NotFound();
+      var pages = await _pageUsecase.GetPagesAsync();
+      return Ok(pages);
     }
-
-    return Ok(page);
-  }
-
-  [HttpPost]
-  public async Task<IActionResult> CreatePage(Page page)
-  {
-    _context.Pages.Add(page);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetPage), new { id = page.Id }, page);
-  }
-
-  [HttpPut("{id}")]
-  public async Task<IActionResult> UpdatePage(int id, Page page)
-  {
-    if(id != page.Id)
+    catch (Exception ex)
     {
-      return BadRequest();
+      // Log the exception (ex) here if needed
+      return StatusCode(500, "An error occurred while retrieving pages.");
     }
-    _context.Pages.Update(page);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
   }
-
-  [HttpDelete("{id}")]
-  public async Task<IActionResult> DeletePage(int id)
-  {
-    var page = await _context.Pages.FindAsync(id);
-
-    if (page == null)
-    {
-      return NotFound();
-    }
-
-    _context.Pages.Remove(page);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
-  }
+  // public async Task<IActionResult> GetPageById(int id)
+  // {
+  //   return Ok(await _pageUsecase.GetPageByIdAsync(id));
+  // }
 }
