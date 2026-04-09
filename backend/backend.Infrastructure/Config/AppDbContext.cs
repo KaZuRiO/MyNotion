@@ -9,14 +9,16 @@ public class AppDbContext : DbContext
   {
   }
 
-  public DbSet<Page> Pages { get; set; }
+  public DbSet<User> Users => Set<User>();
+  public DbSet<Workspace> Workspaces => Set<Workspace>();
+  public DbSet<Page> Pages => Set<Page>();
+  public DbSet<Role> Roles => Set<Role>();
+  public DbSet<Workspace_User> Workspace_Users => Set<Workspace_User>();
+
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
-    modelBuilder.Entity<Page>().HasData(
-        new Page { Id = 1, Title = "Page 1", Icon = "Icon 1", Content = "Content 1" },
-        new Page { Id = 2, Title = "Page 2", Icon = "Icon 2", Content = "Content 2" }
-    // Add more pages as needed
-    );
+
+    modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
   }
 }
