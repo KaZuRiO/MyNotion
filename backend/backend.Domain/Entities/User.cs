@@ -1,4 +1,5 @@
 namespace backend.Domain.Entities;
+
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,5 +24,5 @@ public class User
   public bool IsActive { get; set; } = true;
 
   public List<Page> CreatedPages { get; set; } = new();
-  public List<Workspace_User> Workspace_Users { get; set; } = new();
+  public List<WorkspaceUser> WorkspaceUsers { get; set; } = new();
 }

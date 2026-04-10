@@ -1,9 +1,8 @@
-namespace backend.Application.DTOs.Workspace_User;
-using backend.Domain.Entities;
-public class Workspace_UserDto
+namespace backend.Application.DTOs.WorkspaceUser;
+
+public class UpdateWorkspaceUserDto
 {
   public int Id { get; set; }
-
   public int WorkspaceId { get; set; }
 
   public int UserId { get; set; }

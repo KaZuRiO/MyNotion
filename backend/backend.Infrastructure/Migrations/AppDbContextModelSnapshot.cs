@@ -240,7 +240,7 @@ namespace backend.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("backend.Domain.Entities.Workspace_User", b =>
+            modelBuilder.Entity("backend.Domain.Entities.WorkspaceUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -271,7 +271,7 @@ namespace backend.Infrastructure.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("Workspace_Users");
+                    b.ToTable("WorkspaceUsers");
 
                     b.HasData(
                         new
@@ -330,16 +330,16 @@ namespace backend.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Domain.Entities.Workspace_User", b =>
+            modelBuilder.Entity("backend.Domain.Entities.WorkspaceUser", b =>
                 {
                     b.HasOne("backend.Domain.Entities.Role", "Role")
-                        .WithMany("Workspace_Users")
+                        .WithMany("WorkspaceUsers")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("backend.Domain.Entities.User", "User")
-                        .WithMany("Workspace_Users")
+                        .WithMany("WorkspaceUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -364,14 +364,14 @@ namespace backend.Infrastructure.Migrations
 
             modelBuilder.Entity("backend.Domain.Entities.Role", b =>
                 {
-                    b.Navigation("Workspace_Users");
+                    b.Navigation("WorkspaceUsers");
                 });
 
             modelBuilder.Entity("backend.Domain.Entities.User", b =>
                 {
                     b.Navigation("CreatedPages");
 
-                    b.Navigation("Workspace_Users");
+                    b.Navigation("WorkspaceUsers");
                 });
 
             modelBuilder.Entity("backend.Domain.Entities.Workspace", b =>

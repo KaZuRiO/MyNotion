@@ -8,5 +8,5 @@ public class Role
 
   public int Priority { get; set; } = 0;
 
-  public List<Workspace_User> Workspace_Users { get; set; } = new();
+  public List<WorkspaceUser> WorkspaceUsers { get; set; } = new();
 }

@@ -1,4 +1,5 @@
 namespace backend.Infrastructure.Repositories;
+
 using backend.Domain.Entities;
 using backend.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,44 +14,44 @@ public class WorkspaceUserRepository : IWorkspaceUserRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Workspace_User>> GetWorkspaceUsersAsync()
+    public async Task<IEnumerable<WorkspaceUser>> GetWorkspaceUsersAsync()
     {
-        return await _context.Workspace_Users.ToListAsync();
+        return await _context.WorkspaceUsers.ToListAsync();
     }
 
-    public async Task<Workspace_User> GetWorkspaceUserByIdAsync(int id)
+    public async Task<WorkspaceUser> GetWorkspaceUserByIdAsync(int id)
     {
-        return await _context.Workspace_Users.FindAsync(id);
+        return await _context.WorkspaceUsers.FindAsync(id);
     }
 
-    public async Task CreateWorkspaceUserAsync(Workspace_User workspace_user)
+    public async Task CreateWorkspaceUserAsync(WorkspaceUser WorkspaceUser)
     {
-        var workspaceUser = new Workspace_User
+        var workspaceUser = new WorkspaceUser
         {
-            WorkspaceId = workspace_user.WorkspaceId,
-            UserId = workspace_user.UserId,
-            RoleId = workspace_user.RoleId
+            WorkspaceId = WorkspaceUser.WorkspaceId,
+            UserId = WorkspaceUser.UserId,
+            RoleId = WorkspaceUser.RoleId
         };
-        _context.Workspace_Users.Add(workspaceUser);
+        _context.WorkspaceUsers.Add(workspaceUser);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateWorkspaceUserAsync(int id, Workspace_User workspace_user)
+    public async Task UpdateWorkspaceUserAsync(int id, WorkspaceUser WorkspaceUser)
     {
-        var workspaceUser = await _context.Workspace_Users.FindAsync(id);
+        var workspaceUser = await _context.WorkspaceUsers.FindAsync(id);
         if (workspaceUser != null)
         {
-            _context.Workspace_Users.Update(workspaceUser);
+            _context.WorkspaceUsers.Update(workspaceUser);
             await _context.SaveChangesAsync();
         }
     }
 
     public async Task DeleteWorkspaceUserAsync(int id)
     {
-        var workspaceUser = await _context.Workspace_Users.FindAsync(id);
+        var workspaceUser = await _context.WorkspaceUsers.FindAsync(id);
         if (workspaceUser != null)
         {
-            _context.Workspace_Users.Remove(workspaceUser);
+            _context.WorkspaceUsers.Remove(workspaceUser);
             await _context.SaveChangesAsync();
         }
     }
