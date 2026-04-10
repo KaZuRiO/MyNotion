@@ -3,7 +3,6 @@ namespace backend.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using backend.Application.UseCases;
 using System.Threading.Tasks;
-using Azure;
 using backend.Application.DTOs.Page;
 
 public class PageController : Controller
@@ -12,11 +11,6 @@ public class PageController : Controller
   public PageController(PageUseCase pageUsecase)
   {
     _pageUsecase = pageUsecase;
-  }
-
-  public IActionResult Index()
-  {
-    return View();
   }
 
   [HttpGet("pages")]
@@ -29,7 +23,6 @@ public class PageController : Controller
     }
     catch (Exception)
     {
-      // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while retrieving pages.");
     }
   }
@@ -47,7 +40,6 @@ public class PageController : Controller
     }
     catch (Exception)
     {
-      // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while retrieving the page.");
     }
   }
@@ -63,7 +55,6 @@ public class PageController : Controller
     }
     catch (Exception)
     {
-      // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while creating the page.");
     }
   }
@@ -82,7 +73,6 @@ public class PageController : Controller
     }
     catch (Exception)
     {
-      // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while updating the page.");
     }
   }
@@ -97,7 +87,6 @@ public class PageController : Controller
     }
     catch (Exception)
     {
-      // Log the exception (ex) here if needed
       return StatusCode(500, "An error occurred while deleting the page.");
     }
   }

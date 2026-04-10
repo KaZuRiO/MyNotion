@@ -1,6 +1,7 @@
 namespace backend.Application.UseCases;
 using backend.Domain.Entities;
 using backend.Domain.Repositories;
+using backend.Application.DTOs.Workspace_User;
 
 public class WorkspaceUserUseCase
 {
@@ -11,44 +12,79 @@ public class WorkspaceUserUseCase
         _workspaceUserRepository = workspaceUserRepository;
     }
 
-    public async Task<IEnumerable<Workspace_User>> GetWorkspaceUsersAsync()
+    public async Task<IEnumerable<Workspace_UserDto>> GetWorkspaceUsersAsync()
     {
-        return await _workspaceUserRepository.GetWorkspaceUsersAsync();
+        var workspaceUsers = await _workspaceUserRepository.GetWorkspaceUsersAsync();
+        return workspaceUsers.Select(wu => new Workspace_UserDto
+        {
+            Id = wu.Id,
+            WorkspaceId = wu.WorkspaceId,
+            UserId = wu.UserId,
+            RoleId = wu.RoleId,
+            CreatedAt = wu.CreatedAt,
+            UpdatedAt = wu.UpdatedAt
+        });
     }
-    public async Task<Workspace_User> GetWorkspaceUserByIdAsync(int id)
+    public async Task<Workspace_UserDto> GetWorkspaceUserByIdAsync(int id)
     {
-        return await _workspaceUserRepository.GetWorkspaceUserByIdAsync(id);
+        var workspaceUser = await _workspaceUserRepository.GetWorkspaceUserByIdAsync(id);
+        return new Workspace_UserDto
+        {
+            Id = workspaceUser.Id,
+            WorkspaceId = workspaceUser.WorkspaceId,
+            UserId = workspaceUser.UserId,
+            RoleId = workspaceUser.RoleId,
+            CreatedAt = workspaceUser.CreatedAt,
+            UpdatedAt = workspaceUser.UpdatedAt
+        };
     }
 
-  public async Task<Workspace_User> CreateWorkspaceUserAsync(Workspace workspace, User user, Role role)
+  public async Task<Workspace_UserDto> CreateWorkspaceUserAsync(CreateWorkspace_UserDto workspace_user, Workspace workspace, User user)
   {
       var workspaceUser = new Workspace_User
       {
-          WorkspaceId = workspace.Id,
-          UserId = user.Id,
-          Role = role,
-        //   CreatedAt = DateTime.UtcNow,
-        //   UpdatedAt = DateTime.UtcNow
+          WorkspaceId = workspace_user.WorkspaceId,
+          UserId = workspace_user.UserId,
+          RoleId = workspace_user.RoleId,
+          CreatedAt = DateTime.UtcNow,
+          UpdatedAt = DateTime.UtcNow
       };
 
-      await _workspaceUserRepository.CreateWorkspaceUserAsync(workspace, user, role);
-      return workspaceUser;
+      await _workspaceUserRepository.CreateWorkspaceUserAsync(workspaceUser);
+      return new Workspace_UserDto
+      {
+          Id = workspaceUser.Id,
+          WorkspaceId = workspaceUser.WorkspaceId,
+          UserId = workspaceUser.UserId,
+          RoleId = workspaceUser.RoleId,
+          CreatedAt = workspaceUser.CreatedAt,
+          UpdatedAt = workspaceUser.UpdatedAt
+      };
   }
 
-  public async Task UpdateWorkspaceUserAsync(int id, Workspace workspace, User user, Role role)
+  public async Task<Workspace_UserDto?> UpdateWorkspaceUserAsync(int id, Workspace_User workspace_user)
     {
         var workspaceUser = await _workspaceUserRepository.GetWorkspaceUserByIdAsync(id);
-        workspaceUser.Workspace = workspace;
-        workspaceUser.User = user;
-        workspaceUser.Role = role;
+        if (workspaceUser == null) return null;
+        workspaceUser.WorkspaceId = workspace_user.WorkspaceId;
+        workspaceUser.UserId = workspace_user.UserId;
+        workspaceUser.RoleId = workspace_user.RoleId;
         workspaceUser.UpdatedAt = DateTime.UtcNow;
 
-        await _workspaceUserRepository.UpdateWorkspaceUserAsync(id, workspace, user, role);
+        await _workspaceUserRepository.UpdateWorkspaceUserAsync(id, workspace_user);
+        return new Workspace_UserDto
+        {
+            Id = workspaceUser.Id,
+            WorkspaceId = workspaceUser.WorkspaceId,
+            UserId = workspaceUser.UserId,
+            RoleId = workspaceUser.RoleId,
+            CreatedAt = workspaceUser.CreatedAt,
+            UpdatedAt = workspaceUser.UpdatedAt
+        };
     }
 
     public async Task DeleteWorkspaceUserAsync(int id)
     {
-        var workspaceUser = await _workspaceUserRepository.GetWorkspaceUserByIdAsync(id);
         await _workspaceUserRepository.DeleteWorkspaceUserAsync(id);
     }
 

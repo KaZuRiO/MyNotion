@@ -6,7 +6,6 @@ public class PageUseCase
 {
     private readonly IPageRepository _pageRepository;
     // private readonly ITraductionService _traductionService;
-
     public PageUseCase(IPageRepository pageRepository)
     {
         _pageRepository = pageRepository;
@@ -59,7 +58,7 @@ public class PageUseCase
             UpdatedAt = page.UpdatedAt
         };
     }
-    public async Task<PageDto> UpdatePageAsync(int id, UpdatePageDto dto)
+    public async Task<PageDto?> UpdatePageAsync(int id, UpdatePageDto dto)
     {
         var page = await _pageRepository.GetPageByIdAsync(id);
         if (page == null) return null;

@@ -1,8 +1,5 @@
 namespace backend.Application.DTOs.Page;
 
-using Microsoft.EntityFrameworkCore.Metadata;
-
-
 public class CreatePageDto
 {
   public string Title { get; set; } = string.Empty;

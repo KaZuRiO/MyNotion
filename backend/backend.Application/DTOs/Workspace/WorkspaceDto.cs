@@ -1,16 +1,11 @@
-namespace backend.Domain.Entities;
+namespace backend.Application.DTOs.Workspace;
 
-public class Workspace
+public class WorkspaceDto
 {
   public int Id { get; set; }
-  public string Name { get; set; }
+  public string? Name { get; set; }
   public string? Description { get; set; }
-
   public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
   public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 
-  public int UserId { get; set; }
-  public User User { get; set; }
-
-  public List<Page> Pages { get; set; } = new();
 }
