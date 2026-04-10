@@ -23,19 +23,19 @@ public class WorkspaceUserRepository : IWorkspaceUserRepository
         return await _context.Workspace_Users.FindAsync(id);
     }
 
-    public async Task CreateWorkspaceUserAsync(Workspace workspace, User user, Role role)
+    public async Task CreateWorkspaceUserAsync(Workspace_User workspace_user)
     {
         var workspaceUser = new Workspace_User
         {
-            WorkspaceId = workspace.Id,
-            UserId = user.Id,
-            RoleId = role.Id
+            WorkspaceId = workspace_user.WorkspaceId,
+            UserId = workspace_user.UserId,
+            RoleId = workspace_user.RoleId
         };
         _context.Workspace_Users.Add(workspaceUser);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateWorkspaceUserAsync(int id, Workspace workspace, User user, Role role)
+    public async Task UpdateWorkspaceUserAsync(int id, Workspace_User workspace_user)
     {
         var workspaceUser = await _context.Workspace_Users.FindAsync(id);
         if (workspaceUser != null)
