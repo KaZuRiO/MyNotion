@@ -45,7 +45,7 @@ public class PageController : Controller
   }
 
 
-[HttpPost("pages")]
+  [HttpPost("pages")]
   public async Task<IActionResult> CreatePage([FromBody] CreatePageDto dto)
   {
     try

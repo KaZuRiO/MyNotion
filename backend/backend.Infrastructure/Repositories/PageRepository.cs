@@ -18,7 +18,7 @@ public class PageRepository : IPageRepository
         return await _context.Pages.ToListAsync();
     }
 
-    public async Task<Page> GetPageByIdAsync(int id)
+    public async Task<Page?> GetPageByIdAsync(int id)
     {
         return await _context.Pages.FindAsync(id);
     }

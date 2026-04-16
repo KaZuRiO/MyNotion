@@ -36,9 +36,9 @@ public class WorkspaceUserRepository : IWorkspaceUserRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateWorkspaceUserAsync(int id, WorkspaceUser WorkspaceUser)
+    public async Task UpdateWorkspaceUserAsync(WorkspaceUser WorkspaceUser)
     {
-        var workspaceUser = await _context.WorkspaceUsers.FindAsync(id);
+        var workspaceUser = await _context.WorkspaceUsers.FindAsync(WorkspaceUser);
         if (workspaceUser != null)
         {
             _context.WorkspaceUsers.Update(workspaceUser);

@@ -40,7 +40,7 @@ public class WorkspaceUserUseCase
         };
     }
 
-    public async Task<WorkspaceUserDto> CreateWorkspaceUserAsync(CreateWorkspaceUserDto WorkspaceUser, Workspace workspace, User user)
+    public async Task<WorkspaceUserDto> CreateWorkspaceUserAsync(CreateWorkspaceUserDto WorkspaceUser)
     {
         var workspaceUser = new WorkspaceUser
         {
@@ -63,16 +63,16 @@ public class WorkspaceUserUseCase
         };
     }
 
-    public async Task<WorkspaceUserDto?> UpdateWorkspaceUserAsync(int id, WorkspaceUser WorkspaceUser)
+    public async Task<WorkspaceUserDto?> UpdateWorkspaceUserAsync(int id, UpdateWorkspaceUserDto updateWorkspaceUserDto)
     {
         var workspaceUser = await _workspaceUserRepository.GetWorkspaceUserByIdAsync(id);
         if (workspaceUser == null) return null;
-        workspaceUser.WorkspaceId = WorkspaceUser.WorkspaceId;
-        workspaceUser.UserId = WorkspaceUser.UserId;
-        workspaceUser.RoleId = WorkspaceUser.RoleId;
+        workspaceUser.WorkspaceId = updateWorkspaceUserDto.WorkspaceId;
+        workspaceUser.UserId = updateWorkspaceUserDto.UserId;
+        workspaceUser.RoleId = updateWorkspaceUserDto.RoleId;
         workspaceUser.UpdatedAt = DateTime.UtcNow;
 
-        await _workspaceUserRepository.UpdateWorkspaceUserAsync(id, WorkspaceUser);
+        await _workspaceUserRepository.UpdateWorkspaceUserAsync(workspaceUser);
         return new WorkspaceUserDto
         {
             Id = workspaceUser.Id,
