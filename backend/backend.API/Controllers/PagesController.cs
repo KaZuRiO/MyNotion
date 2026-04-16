@@ -5,7 +5,7 @@ using backend.Application.UseCases;
 using System.Threading.Tasks;
 using backend.Application.DTOs.Page;
 
-[Route("pages/[controller]")]
+[Route("api/[controller]")]
 public class PageController : Controller
 {
   private readonly PageUseCase _pageUsecase;

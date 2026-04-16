@@ -5,7 +5,7 @@ using backend.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using backend.Application.DTOs.User;
 
-[Route("users/[controller]")]
+[Route("api/[controller]")]
 public class UsersController : Controller
 {
   private readonly UserUseCase _userUsecase;

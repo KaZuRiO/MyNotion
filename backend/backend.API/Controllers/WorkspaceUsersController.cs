@@ -5,7 +5,7 @@ using backend.Application.UseCases;
 using backend.Application.DTOs.WorkspaceUser;
 using backend.Domain.Entities;
 
-[Route("pages/[controller]")]
+[Route("api/[controller]")]
 public class WorkspaceUsersController : Controller
 {
   private readonly WorkspaceUserUseCase _workspaceUserUseCase;

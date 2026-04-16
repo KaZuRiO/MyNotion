@@ -4,7 +4,7 @@ using backend.Application.UseCases;
 using System.Threading.Tasks;
 using backend.Application.DTOs.Role;
 
-[Route("roles/[controller]")]
+[Route("api/[controller]")]
 public class RolesController : Controller
 {
   private readonly RoleUseCase _roleUsecase;

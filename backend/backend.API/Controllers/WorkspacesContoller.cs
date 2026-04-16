@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Application.UseCases;
 using backend.Application.DTOs.Workspace;
 
-[Route("workspaces/[controller]")]
+[Route("api/[controller]")]
 public class WorkspacesController : Controller
 {
   private readonly WorkspaceUseCase _workspaceUsecase;
