@@ -27,7 +27,7 @@ public class WorkspaceUsersController : Controller
   }
 
   [HttpGet("{id}")]
-  public async Task<IActionResult> GetWorkspaceUser(int id)
+  public async Task<IActionResult> GetWorkspaceUserById(int id)
   {
     try
     {
@@ -50,7 +50,7 @@ public class WorkspaceUsersController : Controller
     try
     {
       var createdWorkspaceUser = await _workspaceUserUseCase.CreateWorkspaceUserAsync(dto);
-      return CreatedAtAction(nameof(GetWorkspaceUser), new { id = createdWorkspaceUser.Id }, createdWorkspaceUser);
+      return CreatedAtAction(nameof(GetWorkspaceUserById), new { id = createdWorkspaceUser.Id }, createdWorkspaceUser);
     }
     catch (Exception)
     {
