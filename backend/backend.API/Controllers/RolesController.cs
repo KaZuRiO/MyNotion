@@ -4,6 +4,7 @@ using backend.Application.UseCases;
 using System.Threading.Tasks;
 using backend.Application.DTOs.Role;
 
+[Route("roles/[controller]")]
 public class RolesController : Controller
 {
   private readonly RoleUseCase _roleUsecase;
@@ -13,7 +14,7 @@ public class RolesController : Controller
     _roleUsecase = roleUsecase;
   }
 
-  [HttpGet("roles")]
+  [HttpGet]
   public async Task<IActionResult> GetRoles()
   {
     try
@@ -42,7 +43,7 @@ public class RolesController : Controller
     }
   }
 
-  [HttpPost("roles")]
+  [HttpPost]
   public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto dto)
   {
     try

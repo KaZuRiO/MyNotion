@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Application.UseCases;
 using backend.Application.DTOs.Workspace;
 
+[Route("workspaces/[controller]")]
 public class WorkspacesController : Controller
 {
   private readonly WorkspaceUseCase _workspaceUsecase;
@@ -11,7 +12,7 @@ public class WorkspacesController : Controller
     _workspaceUsecase = workspaceUsecase;
   }
 
-  [HttpGet("workspaces")]
+  [HttpGet]
   public async Task<IActionResult> GetWorkspaces()
   {
     try

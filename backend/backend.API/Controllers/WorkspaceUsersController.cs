@@ -5,6 +5,7 @@ using backend.Application.UseCases;
 using backend.Application.DTOs.WorkspaceUser;
 using backend.Domain.Entities;
 
+[Route("pages/[controller]")]
 public class WorkspaceUsersController : Controller
 {
   private readonly WorkspaceUserUseCase _workspaceUserUseCase;
@@ -12,7 +13,7 @@ public class WorkspaceUsersController : Controller
   {
     _workspaceUserUseCase = workspaceUserUseCase;
   }
-  [HttpGet("workspaceusers")]
+  [HttpGet]
   public async Task<IActionResult> GetWorkspaceUsers()
   {
     try
@@ -44,7 +45,7 @@ public class WorkspaceUsersController : Controller
     }
   }
 
-  [HttpPost("workspaceusers")]
+  [HttpPost]
   public async Task<IActionResult> CreateWorkspaceUser([FromBody] CreateWorkspaceUserDto dto)
   {
     try

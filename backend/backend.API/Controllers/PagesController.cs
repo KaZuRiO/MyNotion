@@ -5,6 +5,7 @@ using backend.Application.UseCases;
 using System.Threading.Tasks;
 using backend.Application.DTOs.Page;
 
+[Route("pages/[controller]")]
 public class PageController : Controller
 {
   private readonly PageUseCase _pageUsecase;
@@ -13,7 +14,7 @@ public class PageController : Controller
     _pageUsecase = pageUsecase;
   }
 
-  [HttpGet("pages")]
+  [HttpGet]
   public async Task<IActionResult> GetPages()
   {
     try
@@ -45,7 +46,7 @@ public class PageController : Controller
   }
 
 
-  [HttpPost("pages")]
+  [HttpPost]
   public async Task<IActionResult> CreatePage([FromBody] CreatePageDto dto)
   {
     try

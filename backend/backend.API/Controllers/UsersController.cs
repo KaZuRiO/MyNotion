@@ -5,6 +5,7 @@ using backend.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using backend.Application.DTOs.User;
 
+[Route("users/[controller]")]
 public class UsersController : Controller
 {
   private readonly UserUseCase _userUsecase;
@@ -14,7 +15,7 @@ public class UsersController : Controller
     _userUsecase = userUsecase;
   }
 
-  [HttpGet("users")]
+  [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
     try
@@ -45,7 +46,7 @@ public class UsersController : Controller
       return StatusCode(500, "An error occurred while retrieving the user.");
     }
   }
-  [HttpPost("users")]
+  [HttpPost]
   public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
   {
     try
