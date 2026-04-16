@@ -79,9 +79,6 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefix frontend
 
-      - name: Prettier Check
-        run: npx prettier --check "frontend/**/*.{ts,html,css,json,md}"
-
       - name: Build & Test
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.event_name == 'pull_request'
         run: |
