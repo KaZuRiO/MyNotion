@@ -1,76 +1,94 @@
 namespace backend.API.Controllers;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.AspNetCore.Mvc;
+using backend.Application.UseCases;
+using System.Threading.Tasks;
+using backend.Application.DTOs.Page;
 
-using backend.Infrastructure.Config;
-using backend.Domain.Entities;
-
-[ApiController]
-[Route("[controller]")]
-public class PagesController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
-
-  public PagesController(AppDbContext context)
+[Route("api/[controller]")]
+public class PageController : Controller
+{
+  private readonly PageUseCase _pageUsecase;
+  public PageController(PageUseCase pageUsecase)
   {
-    _context = context;
+    _pageUsecase = pageUsecase;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetPages()
   {
-    var pages = await _context.Pages.ToListAsync();
-    return Ok(pages);
-  }
-
-  [HttpGet("{id}")]
-  public async Task<IActionResult> GetPage(int id)
-  {
-    var page = await _context.Pages.FindAsync(id);
-
-    if (page == null)
+    try
     {
-      return NotFound();
+      var pages = await _pageUsecase.GetPagesAsync();
+      return Ok(pages);
     }
-
-    return Ok(page);
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving pages.");
+    }
   }
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetPageById(int id)
+  {
+    try
+    {
+      var page = await _pageUsecase.GetPageByIdAsync(id);
+      if (page == null)
+      {
+        return NotFound($"Page with ID {id} not found.");
+      }
+      return Ok(page);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving the page.");
+    }
+  }
+
 
   [HttpPost]
-  public async Task<IActionResult> CreatePage(Page page)
+  public async Task<IActionResult> CreatePage([FromBody] CreatePageDto dto)
   {
-    _context.Pages.Add(page);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetPage), new { id = page.Id }, page);
+    try
+    {
+      var createdPage = await _pageUsecase.CreatePageAsync(dto);
+      return CreatedAtAction(nameof(GetPageById), new { id = createdPage.Id }, createdPage);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while creating the page.");
+    }
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdatePage(int id, Page page)
+  public async Task<IActionResult> UpdatePage(int id, [FromBody] UpdatePageDto dto)
   {
-    if(id != page.Id)
+    try
     {
-      return BadRequest();
+      var updatedPage = await _pageUsecase.UpdatePageAsync(id, dto);
+      if (updatedPage == null)
+      {
+        return NotFound($"Page with ID {id} not found.");
+      }
+      return Ok(updatedPage);
     }
-    _context.Pages.Update(page);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while updating the page.");
+    }
   }
 
   [HttpDelete("{id}")]
   public async Task<IActionResult> DeletePage(int id)
   {
-    var page = await _context.Pages.FindAsync(id);
-
-    if (page == null)
+    try
     {
-      return NotFound();
+      await _pageUsecase.DeletePageAsync(id);
+      return NoContent();
     }
-
-    _context.Pages.Remove(page);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while deleting the page.");
+    }
   }
 }

@@ -1,77 +1,96 @@
 namespace backend.API.Controllers;
 
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-
-using backend.Infrastructure.Config;
 using backend.Domain.Entities;
+using backend.Application.UseCases;
+using Microsoft.AspNetCore.Mvc;
+using backend.Application.DTOs.User;
 
-[ApiController]
-[Route("[controller]")]
-public class UsersController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
+[Route("api/[controller]")]
+public class UsersController : Controller
+{
+  private readonly UserUseCase _userUsecase;
 
-  public UsersController(AppDbContext context)
+  public UsersController(UserUseCase userUsecase)
   {
-    _context = context;
+    _userUsecase = userUsecase;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetUsers()
   {
-    var users = await _context.Users.ToListAsync();
-    return Ok(users);
+    try
+    {
+      var users = await _userUsecase.GetUsersAsync();
+      return Ok(users);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving users.");
+    }
   }
 
   [HttpGet("{id}")]
-  public async Task<IActionResult> GetUser(int id)
+  public async Task<IActionResult> GetUserById(int id)
   {
-    var user = await _context.Users.FindAsync(id);
-
-    if (user == null)
+    try
     {
-      return NotFound();
+      var user = await _userUsecase.GetUserByIdAsync(id);
+      if (user == null)
+      {
+        return NotFound($"User with ID {id} not found.");
+      }
+      return Ok(user);
     }
-
-    return Ok(user);
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving the user.");
+    }
   }
-
   [HttpPost]
-  public async Task<IActionResult> CreateUser(User user)
+  public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
   {
-    _context.Users.Add(user);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+    try
+    {
+      var createdUser = await _userUsecase.CreateUserAsync(createUserDto);
+      return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while creating the user.");
+    }
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateUser(int id, User user)
+  public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
   {
-    if(id != user.Id)
+    try
     {
-      return BadRequest();
+      var updatedUser = await _userUsecase.UpdateUserAsync(id, updateUserDto);
+      if (updatedUser == null)
+      {
+        return NotFound($"User with ID {id} not found.");
+      }
+      return Ok(updatedUser);
     }
-    _context.Users.Update(user);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while updating the user.");
+    }
   }
 
   [HttpDelete("{id}")]
   public async Task<IActionResult> DeleteUser(int id)
   {
-    var user = await _context.Users.FindAsync(id);
-
-    if (user == null)
+    try
     {
-      return NotFound();
+      await _userUsecase.DeleteUserAsync(id);
+      return NoContent();
     }
-
-    _context.Users.Remove(user);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while deleting the user.");
+    }
   }
+
+
 }

@@ -1,78 +1,91 @@
 namespace backend.API.Controllers;
-
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using backend.Application.UseCases;
+using System.Threading.Tasks;
+using backend.Application.DTOs.Role;
 
-using backend.Infrastructure.Config;
-using backend.Domain.Entities;
+[Route("api/[controller]")]
+public class RolesController : Controller
+{
+  private readonly RoleUseCase _roleUsecase;
 
-[ApiController]
-[Route("[controller]")]
-public class RolesController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
-
-  public RolesController(AppDbContext context)
+  public RolesController(RoleUseCase roleUsecase)
   {
-    _context = context;
+    _roleUsecase = roleUsecase;
   }
 
   [HttpGet]
-
   public async Task<IActionResult> GetRoles()
   {
-    var roles = await _context.Roles.ToListAsync();
-    return Ok(roles);
-  }
-
-  [HttpGet("{id}")]
-  public async Task<IActionResult> GetRole(int id)
-  {
-    var role = await _context.Roles.FindAsync(id);
-
-    if (role == null)
+    try
     {
-      return NotFound();
+      var roles = await _roleUsecase.GetRolesAsync();
+      return Ok(roles);
     }
-
-    return Ok(role);
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving roles.");
+    }
+  }
+  [HttpGet("{id}")]
+  public async Task<IActionResult> GetRoleById(int id)
+  {
+    try    {
+      var role = await _roleUsecase.GetRoleByIdAsync(id);
+      if (role == null)      {
+        return NotFound($"Role with ID {id} not found.");   
+      }
+      return Ok(role);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving the role.");
+    }
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateRole(Role role)
+  public async Task<IActionResult> CreateRole([FromBody] CreateRoleDto dto)
   {
-    _context.Roles.Add(role);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetRole), new { id = role.Id }, role);
+    try
+    {
+      var createdRole = await _roleUsecase.CreateRoleAsync(dto);
+      return CreatedAtAction(nameof(GetRoleById), new { id = createdRole.Id }, createdRole);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while creating the role.");
+    }
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateRole(int id, Role role)
+  public async Task<IActionResult> UpdateRole(int id, [FromBody] UpdateRoleDto dto)
   {
-    if(id != role.Id)
+    try
     {
-      return BadRequest();
+      var updatedRole = await _roleUsecase.UpdateRoleAsync(id, dto);
+      if (updatedRole == null)
+      {
+        return NotFound($"Role with ID {id} not found.");
+      }
+      return Ok(updatedRole);
     }
-    _context.Roles.Update(role);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while updating the role.");
+    }
   }
 
   [HttpDelete("{id}")]
   public async Task<IActionResult> DeleteRole(int id)
   {
-    var role = await _context.Roles.FindAsync(id);
-
-    if (role == null)
+    try
     {
-      return NotFound();
+      await _roleUsecase.DeleteRoleAsync(id);
+      return Ok();
     }
-
-    _context.Roles.Remove(role);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while deleting the role.");
+    }
   }
 }

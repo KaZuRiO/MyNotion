@@ -12,7 +12,7 @@ using backend.Infrastructure.Config;
 namespace backend.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260313134519_InitialCreate")]
+    [Migration("20260409121714_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,46 +24,6 @@ namespace backend.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owner",
-                            Priority = 3
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Admin",
-                            Priority = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Member",
-                            Priority = 1
-                        });
-                });
 
             modelBuilder.Entity("backend.Domain.Entities.Page", b =>
                 {
@@ -136,6 +96,46 @@ namespace backend.Infrastructure.Migrations
                             Title = "Getting Started",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             WorkspaceId = 1
+                        });
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Owner",
+                            Priority = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Admin",
+                            Priority = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Member",
+                            Priority = 1
                         });
                 });
 
@@ -243,7 +243,7 @@ namespace backend.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("backend.Domain.Entities.Workspace_User", b =>
+            modelBuilder.Entity("backend.Domain.Entities.WorkspaceUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,8 +251,14 @@ namespace backend.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -268,20 +274,24 @@ namespace backend.Infrastructure.Migrations
 
                     b.HasIndex("WorkspaceId");
 
-                    b.ToTable("Workspace_Users");
+                    b.ToTable("WorkspaceUsers");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });
@@ -323,16 +333,16 @@ namespace backend.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Domain.Entities.Workspace_User", b =>
+            modelBuilder.Entity("backend.Domain.Entities.WorkspaceUser", b =>
                 {
-                    b.HasOne("Role", "Role")
-                        .WithMany("Workspace_Users")
+                    b.HasOne("backend.Domain.Entities.Role", "Role")
+                        .WithMany("WorkspaceUsers")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("backend.Domain.Entities.User", "User")
-                        .WithMany("Workspace_Users")
+                        .WithMany("WorkspaceUsers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -350,21 +360,21 @@ namespace backend.Infrastructure.Migrations
                     b.Navigation("Workspace");
                 });
 
-            modelBuilder.Entity("Role", b =>
-                {
-                    b.Navigation("Workspace_Users");
-                });
-
             modelBuilder.Entity("backend.Domain.Entities.Page", b =>
                 {
                     b.Navigation("ChildPages");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("WorkspaceUsers");
                 });
 
             modelBuilder.Entity("backend.Domain.Entities.User", b =>
                 {
                     b.Navigation("CreatedPages");
 
-                    b.Navigation("Workspace_Users");
+                    b.Navigation("WorkspaceUsers");
                 });
 
             modelBuilder.Entity("backend.Domain.Entities.Workspace", b =>

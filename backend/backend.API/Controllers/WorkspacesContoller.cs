@@ -1,77 +1,93 @@
 namespace backend.API.Controllers;
-
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using backend.Application.UseCases;
+using backend.Application.DTOs.Workspace;
 
-using backend.Infrastructure.Config;
-using backend.Domain.Entities;
-
-[ApiController]
-[Route("[controller]")]
-public class WorkspacesController : ControllerBase
-{ 
-  private readonly AppDbContext _context;
-
-  public WorkspacesController(AppDbContext context)
+[Route("api/[controller]")]
+public class WorkspacesController : Controller
+{
+  private readonly WorkspaceUseCase _workspaceUsecase;
+  public WorkspacesController(WorkspaceUseCase workspaceUsecase)
   {
-    _context = context;
+    _workspaceUsecase = workspaceUsecase;
   }
 
   [HttpGet]
   public async Task<IActionResult> GetWorkspaces()
   {
-    var workspaces = await _context.Workspaces.ToListAsync();
-    return Ok(workspaces);
+    try
+    {
+      var workspaces = await _workspaceUsecase.GetWorkspacesAsync();
+      return Ok(workspaces);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving workspaces.");
+    }
   }
 
   [HttpGet("{id}")]
-  public async Task<IActionResult> GetWorkspace(int id)
+  public async Task<IActionResult> GetWorkspaceById(int id)
   {
-    var workspace = await _context.Workspaces.FindAsync(id);
-
-    if (workspace == null)
+    try
     {
-      return NotFound();
+      var workspace = await _workspaceUsecase.GetWorkspaceByIdAsync(id);
+      if (workspace == null)
+      {
+        return NotFound();
+      }
+      return Ok(workspace);
     }
-
-    return Ok(workspace);
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while retrieving the workspace.");
+    }
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateWorkspace(Workspace workspace)
+  public async Task<IActionResult> CreateWorkspace([FromBody] CreateWorkspaceDto dto)
   {
-    _context.Workspaces.Add(workspace);
-    await _context.SaveChangesAsync();
-
-    return CreatedAtAction(nameof(GetWorkspace), new { id = workspace.Id }, workspace);
+    try
+    {
+      var createdWorkspace = await _workspaceUsecase.CreateWorkspaceAsync(dto);
+      return CreatedAtAction(nameof(GetWorkspaceById), new { id = createdWorkspace.Id }, createdWorkspace);
+    }
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while creating the workspace.");
+    }
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateWorkspace(int id, Workspace workspace)
+  public async Task<IActionResult> UpdateWorkspace(int id, [FromBody] UpdateWorkspaceDto dto)
   {
-    if(id != workspace.Id)
+    try
     {
-      return BadRequest();
+      var updatedWorkspace = await _workspaceUsecase.UpdateWorkspaceAsync(id, dto);
+      if (updatedWorkspace == null)
+      {
+        return NotFound();
+      }
+      return Ok(updatedWorkspace);
     }
-    _context.Workspaces.Update(workspace);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while updating the workspace.");
+    }
   }
 
   [HttpDelete("{id}")]
   public async Task<IActionResult> DeleteWorkspace(int id)
   {
-    var workspace = await _context.Workspaces.FindAsync(id);
-
-    if (workspace == null)
+    try
     {
-      return NotFound();
+      await _workspaceUsecase.DeleteWorkspaceAsync(id);
+      return NoContent();
     }
-
-    _context.Workspaces.Remove(workspace);
-    await _context.SaveChangesAsync();
-
-    return NoContent();
+    catch (Exception)
+    {
+      return StatusCode(500, "An error occurred while deleting the workspace.");
+    }
   }
 }
+

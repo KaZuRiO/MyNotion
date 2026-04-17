@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Infrastructure.Config.EntityConfigurations;
 
-public class WorkspaceUserConfiguration : IEntityTypeConfiguration<Workspace_User>
+public class WorkspaceUserConfiguration : IEntityTypeConfiguration<WorkspaceUser>
 {
-  public void Configure(EntityTypeBuilder<Workspace_User> builder)
+  public void Configure(EntityTypeBuilder<WorkspaceUser> builder)
   {
     builder.HasData(
-        new Workspace_User
+        new WorkspaceUser
         {
           Id = 1,
           WorkspaceId = 1,
           UserId = 1,
-          RoleId = 1 
+          RoleId = 1
         },
-        new Workspace_User
+        new WorkspaceUser
         {
           Id = 2,
           WorkspaceId = 1,

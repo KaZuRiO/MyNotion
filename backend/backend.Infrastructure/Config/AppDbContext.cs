@@ -13,7 +13,7 @@ public class AppDbContext : DbContext
   public DbSet<Workspace> Workspaces => Set<Workspace>();
   public DbSet<Page> Pages => Set<Page>();
   public DbSet<Role> Roles => Set<Role>();
-  public DbSet<Workspace_User> Workspace_Users => Set<Workspace_User>();
+  public DbSet<WorkspaceUser> WorkspaceUsers => Set<WorkspaceUser>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

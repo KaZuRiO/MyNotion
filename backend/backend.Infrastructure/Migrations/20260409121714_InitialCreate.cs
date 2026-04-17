@@ -109,32 +109,34 @@ namespace backend.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workspace_Users",
+                name: "WorkspaceUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     WorkspaceId = table.Column<int>(type: "integer", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false)
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workspace_Users", x => x.Id);
+                    table.PrimaryKey("PK_WorkspaceUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Workspace_Users_Roles_RoleId",
+                        name: "FK_WorkspaceUsers_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Workspace_Users_Users_UserId",
+                        name: "FK_WorkspaceUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Workspace_Users_Workspaces_WorkspaceId",
+                        name: "FK_WorkspaceUsers_Workspaces_WorkspaceId",
                         column: x => x.WorkspaceId,
                         principalTable: "Workspaces",
                         principalColumn: "Id",
@@ -171,12 +173,12 @@ namespace backend.Infrastructure.Migrations
                 values: new object[] { 1, "Welcome to the workspace", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1, "home", false, null, "Home", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), 1 });
 
             migrationBuilder.InsertData(
-                table: "Workspace_Users",
-                columns: new[] { "Id", "RoleId", "UserId", "WorkspaceId" },
+                table: "WorkspaceUsers",
+                columns: new[] { "Id", "CreatedAt", "RoleId", "UpdatedAt", "UserId", "WorkspaceId" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, 1 },
-                    { 2, 2, 2, 1 }
+                    { 1, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(297), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
+                    { 2, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 4, 9, 12, 17, 14, 104, DateTimeKind.Unspecified).AddTicks(300), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -212,18 +214,18 @@ namespace backend.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workspace_Users_RoleId",
-                table: "Workspace_Users",
+                name: "IX_WorkspaceUsers_RoleId",
+                table: "WorkspaceUsers",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workspace_Users_UserId",
-                table: "Workspace_Users",
+                name: "IX_WorkspaceUsers_UserId",
+                table: "WorkspaceUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Workspace_Users_WorkspaceId",
-                table: "Workspace_Users",
+                name: "IX_WorkspaceUsers_WorkspaceId",
+                table: "WorkspaceUsers",
                 column: "WorkspaceId");
 
             migrationBuilder.CreateIndex(
@@ -239,7 +241,7 @@ namespace backend.Infrastructure.Migrations
                 name: "Pages");
 
             migrationBuilder.DropTable(
-                name: "Workspace_Users");
+                name: "WorkspaceUsers");
 
             migrationBuilder.DropTable(
                 name: "Roles");

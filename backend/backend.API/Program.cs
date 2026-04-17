@@ -1,6 +1,8 @@
 using backend.Infrastructure.Config;
-using Microsoft.EntityFrameworkCore;
 using backend.Infrastructure;
+using backend.Application;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // --------------------
@@ -9,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
-
+builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

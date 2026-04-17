@@ -1,6 +1,6 @@
 namespace backend.Domain.Entities;
 
-public class Workspace_User
+public class WorkspaceUser
 {
   public int Id { get; set; }
 
@@ -12,4 +12,7 @@ public class Workspace_User
 
   public int RoleId { get; set; }
   public Role Role { get; set; }
+  public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
+  public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
+
 }

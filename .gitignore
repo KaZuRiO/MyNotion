@@ -1,5 +1,6 @@
-.vscode/
 .env
+.fake
+.vscode/
 
 # ci/cd
 gitleaks-report.json
