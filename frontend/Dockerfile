@@ -3,7 +3,7 @@
 # =========================================
 
 # Use a lightweight DHI Node.js image for building
-FROM dhi.io/node:24-alpine3.22-dev AS base
+FROM node:lts-alpine AS base
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -34,7 +34,7 @@ WORKDIR /app
 # Copy the rest of the application source code into the container
 COPY . .
 # Build the Angular application
-RUN npm run build 
+RUN npm run build
 
 # =========================================
 # Stage 4: Prepare Nginx to Serve Static Files
@@ -52,7 +52,7 @@ COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/htm
 USER nginx
 
 # Expose port 8080 to allow HTTP traffic
-# Note: The default Nginx container now listens on port 8080 instead of 80 
+# Note: The default Nginx container now listens on port 8080 instead of 80
 EXPOSE 8080
 
 # Start Nginx directly with custom config
