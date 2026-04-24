@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Application.DTOs.User;
 
 [Route("api/[controller]")]
+[ApiController]
 public class UsersController : Controller
 {
   private readonly UserUseCase _userUsecase;
@@ -91,6 +92,4 @@ public class UsersController : Controller
       return StatusCode(500, "An error occurred while deleting the user.");
     }
   }
-
-
 }

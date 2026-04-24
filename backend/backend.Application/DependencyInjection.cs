@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddScoped<WorkspaceUserUseCase>();
         services.AddScoped<PageUseCase>();
         services.AddScoped<RoleUseCase>();
+        services.AddScoped<AuthUseCase>();
 
         return services;
     }
