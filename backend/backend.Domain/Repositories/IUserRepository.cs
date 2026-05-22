@@ -1,5 +1,6 @@
-namespace backend.Domain.Repositories;
 using backend.Domain.Entities;
+namespace backend.Domain.Repositories;
+
 public interface IUserRepository
 {
     Task<IEnumerable<User>> GetUsersAsync();

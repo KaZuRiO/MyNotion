@@ -11,9 +11,9 @@ public class Page
   public Page? ParentPage { get; set; }
   public List<Page> ChildPages { get; set; } = new();
   public int WorkspaceId { get; set; }
-  public Workspace Workspace { get; set; }
+  public Workspace Workspace { get; set; } = null!;
   public int CreatedById { get; set; }
-  public User CreatedBy { get; set; }
+  public User CreatedBy { get; set; } = null!;
 
   public bool IsDeleted { get; set; } = false;
 
