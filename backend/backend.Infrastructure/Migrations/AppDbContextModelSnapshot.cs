@@ -154,8 +154,16 @@ namespace backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .HasColumnType("text");
@@ -183,8 +191,10 @@ namespace backend.Infrastructure.Migrations
                             Id = 1,
                             CreatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Email = "admin@example.com",
+                            Firstname = "Admin",
                             IsActive = true,
-                            Password = "$2a$11$c3Weqy3AxX7cQqPoCvRqe.wl4Hv6PqIO4ZsDXqMqmxXhXVjg5di4u",
+                            Lastname = "User",
+                            Password = "$2a$11$r8hPXXt8Iyv34OckGMhnlOz5juS.73hG3KEaPyF1FgRvMH2uTDP8S",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "admin"
                         },
@@ -193,8 +203,10 @@ namespace backend.Infrastructure.Migrations
                             Id = 2,
                             CreatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Email = "user1@example.com",
+                            Firstname = "User",
                             IsActive = true,
-                            Password = "$2a$11$S0RBj0X5XSa0Cjd6fnFKO.g5rNKU6aSrbF8cuX/5HD0xUbq.WDiRq",
+                            Lastname = "One",
+                            Password = "$2a$11$7m6wpwjN8jmngh.9h2nYJOsfgf3OXWRfiSKoYe1g9R8Ot7crIwXDe",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "user1"
                         });
@@ -279,18 +291,18 @@ namespace backend.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 24, 8, 25, 49, 749, DateTimeKind.Unspecified).AddTicks(6070), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5305), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 24, 8, 25, 49, 749, DateTimeKind.Unspecified).AddTicks(6070), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5306), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 4, 24, 8, 25, 49, 749, DateTimeKind.Unspecified).AddTicks(6073), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5309), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 4, 24, 8, 25, 49, 749, DateTimeKind.Unspecified).AddTicks(6074), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5309), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });

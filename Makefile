@@ -5,8 +5,18 @@ docker:
 	docker compose up --build -d
 	docker ps
 
-stop:
+docker-stop:
 	docker compose down
 	docker image prune --all --force
 	docker volume prune --all --force
 	docker ps
+
+migrate:
+	cd backend && dotnet ef migrations add InitialCreate \
+		--project backend.Infrastructure/backend.Infrastructure.csproj \
+		--startup-project backend.API/backend.API.csproj
+
+migrate-stop:
+	cd backend && dotnet ef migrations remove \
+		--project backend.Infrastructure/backend.Infrastructure.csproj \
+		--startup-project backend.API/backend.API.csproj
