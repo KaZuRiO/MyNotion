@@ -1,6 +1,7 @@
 .env
 .fake
 .vscode/
+.Ds_Store
 
 # ci/cd
 gitleaks-report.json
