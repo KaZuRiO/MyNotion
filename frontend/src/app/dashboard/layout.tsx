@@ -1,10 +1,10 @@
 import { AppSidebar } from "@/presentation/components/features/app-sidebar";
 import { NavActions } from "@/presentation/components/features/nav-actions";
+import { DynamicBreadcrumb } from "@/presentation/components/features/dynamic-breadcrumb";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
-  BreadcrumbPage,
 } from "@/presentation/components/ui/breadcrumb";
 import { Separator } from "@/presentation/components/ui/separator";
 import {
@@ -32,9 +32,7 @@ export default function DashboardLayout({
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="line-clamp-1">
-                    Project Management & Task Tracking
-                  </BreadcrumbPage>
+                  <DynamicBreadcrumb />
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>

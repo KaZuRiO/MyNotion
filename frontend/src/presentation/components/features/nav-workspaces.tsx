@@ -18,13 +18,16 @@ import {
   SidebarMenuSubItem,
 } from "@/presentation/components/ui/sidebar";
 import { ChevronRightIcon, PlusIcon, MoreHorizontalIcon } from "lucide-react";
+import Link from "next/link";
 
 export function NavWorkspaces({
   workspaces,
 }: {
   workspaces: {
+    id: number;
     name: string;
     pages: {
+      id: number;
       name: string;
       emoji: React.ReactNode;
     }[];
@@ -36,12 +39,12 @@ export function NavWorkspaces({
       <SidebarGroupContent>
         <SidebarMenu>
           {workspaces.map((workspace) => (
-            <Collapsible key={workspace.name}>
+            <Collapsible key={workspace.id}>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="#">
+                  <Link href={`/dashboard/${workspace.id}`}>
                     <span>{workspace.name}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
                 <CollapsibleTrigger asChild>
                   <SidebarMenuAction
@@ -57,12 +60,12 @@ export function NavWorkspaces({
                 <CollapsibleContent>
                   <SidebarMenuSub>
                     {workspace.pages.map((page) => (
-                      <SidebarMenuSubItem key={page.name}>
+                      <SidebarMenuSubItem key={page.id}>
                         <SidebarMenuSubButton asChild>
-                          <a href="#">
+                          <Link href={`/dashboard/${workspace.id}/pages/${page.id}`}>
                             <span>{page.emoji}</span>
                             <span>{page.name}</span>
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}

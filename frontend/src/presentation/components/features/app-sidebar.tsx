@@ -5,11 +5,13 @@ import * as React from "react";
 import { NavFavorites } from "@/presentation/components/features/nav-favorites";
 import { NavMain } from "@/presentation/components/features/nav-main";
 import { NavSecondary } from "@/presentation/components/features/nav-secondary";
+import { NavUser } from "@/presentation/components/features/nav-user";
 import { NavWorkspaces } from "@/presentation/components/features/nav-workspaces";
 import { TeamSwitcher } from "@/presentation/components/features/team-switcher";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarRail,
 } from "@/presentation/components/ui/sidebar";
@@ -31,6 +33,11 @@ import { useWorkspaces } from "@/presentation/hooks/use-workspaces";
 
 // This is sample data.
 const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
   teams: [
     {
       name: "Acme Inc",
@@ -107,8 +114,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const workspaces = React.useMemo(() => {
     if (loading) return [];
     return apiWorkspaces.map((ws) => ({
+      id: ws.id,
       name: ws.name,
-
       pages: [], // Empty for now as API doesn't provide them
     }));
   }, [apiWorkspaces, loading]);
@@ -123,6 +130,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavWorkspaces workspaces={workspaces} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );
