@@ -20,13 +20,17 @@ public class PageUseCase
             Title = page.Title,
             Content = page.Content,
             Icon = page.Icon,
+            ParentPageId = page.ParentPageId,
+            WorkspaceId = page.WorkspaceId,
+            CreatedById = page.CreatedById,
             CreatedAt = page.CreatedAt,
             UpdatedAt = page.UpdatedAt
         });
     }
-    public async Task<PageDto> GetPageByIdAsync(int id)
+    public async Task<PageDto?> GetPageByIdAsync(int id)
     {
         var page = await _pageRepository.GetPageByIdAsync(id);
+        if (page == null) return null;
 
         return new PageDto
         {
@@ -34,10 +38,12 @@ public class PageUseCase
             Title = page.Title,
             Content = page.Content,
             Icon = page.Icon,
+            ParentPageId = page.ParentPageId,
+            WorkspaceId = page.WorkspaceId,
+            CreatedById = page.CreatedById,
             CreatedAt = page.CreatedAt,
             UpdatedAt = page.UpdatedAt
         };
-
     }
     public async Task<PageDto> CreatePageAsync(CreatePageDto dto)
     {
@@ -45,7 +51,10 @@ public class PageUseCase
         {
             Title = dto.Title,
             Content = dto.Content,
-            Icon = dto.Icon
+            Icon = dto.Icon,
+            WorkspaceId = dto.WorkspaceId,
+            CreatedById = dto.CreatedById,
+            ParentPageId = dto.ParentPageId
         };
         await _pageRepository.CreatePageAsync(page);
         return new PageDto
@@ -54,6 +63,9 @@ public class PageUseCase
             Title = page.Title,
             Content = page.Content,
             Icon = page.Icon,
+            ParentPageId = page.ParentPageId,
+            WorkspaceId = page.WorkspaceId,
+            CreatedById = page.CreatedById,
             CreatedAt = page.CreatedAt,
             UpdatedAt = page.UpdatedAt
         };
@@ -66,6 +78,7 @@ public class PageUseCase
         page.Title = dto.Title;
         page.Content = dto.Content;
         page.Icon = dto.Icon;
+        page.ParentPageId = dto.ParentPageId;
         page.UpdatedAt = DateTime.UtcNow;
 
         await _pageRepository.UpdatePageAsync(page);
@@ -76,6 +89,9 @@ public class PageUseCase
             Title = page.Title,
             Content = page.Content,
             Icon = page.Icon,
+            ParentPageId = page.ParentPageId,
+            WorkspaceId = page.WorkspaceId,
+            CreatedById = page.CreatedById,
             CreatedAt = page.CreatedAt,
             UpdatedAt = page.UpdatedAt
         };

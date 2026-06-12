@@ -17,6 +17,4 @@ migrate:
 		--startup-project backend.API/backend.API.csproj
 
 migrate-stop:
-	cd backend && dotnet ef migrations remove \
-		--project backend.Infrastructure/backend.Infrastructure.csproj \
-		--startup-project backend.API/backend.API.csproj
+	cd backend && rm -rf backend.Infrastructure/Migrations
