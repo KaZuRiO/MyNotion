@@ -24,7 +24,9 @@ namespace backend.Infrastructure.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     Position = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
-                    ParentBlockId = table.Column<int>(type: "integer", nullable: true)
+                    ParentBlockId = table.Column<int>(type: "integer", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,11 +166,11 @@ namespace backend.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Blocks",
-                columns: new[] { "Id", "Content", "PageId", "ParentBlockId", "Position", "Type" },
+                columns: new[] { "Id", "Content", "CreatedAt", "PageId", "ParentBlockId", "Position", "Type", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, "Welcome to the workspace", 1, null, 0m, "Text" },
-                    { 2, "First block of the system", 2, null, 1m, "Text" }
+                    { 1, "Welcome to the workspace", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, 0m, "Text", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, "First block of the system", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, null, 1m, "Text", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -186,8 +188,8 @@ namespace backend.Infrastructure.Migrations
                 columns: new[] { "Id", "AvatarUrl", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "UpdatedAt", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin@example.com", "Admin", true, "User", "$2a$11$JD/Mg1TL6ahHkIg.8VdW3us2GQAPh49InSUldpzYMaHvUWq.lXRiy", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin" },
-                    { 2, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1@example.com", "User", true, "One", "$2a$11$KpHQengsXXscBf9ytJt3FOhvarDOJoE21MolMvpA3i5aPmUGcgGyK", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1" }
+                    { 1, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin@example.com", "Admin", true, "User", "$2a$11$QtCzwTca6kuyfgtFqMz9auVClMyI4KOL/ykCq/cCYOaEVHiNFeVL2", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin" },
+                    { 2, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1@example.com", "User", true, "One", "$2a$11$TU3oUI7seOba4rAr0MCJ4.b59HRCLG.sfl4qAJcw6ugKfZ9.z4nSa", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1" }
                 });
 
             migrationBuilder.InsertData(
@@ -205,8 +207,8 @@ namespace backend.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "RoleId", "UpdatedAt", "UserId", "WorkspaceId" },
                 values: new object[,]
                 {
-                    { 1, new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2264), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2264), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
-                    { 2, new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2266), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2266), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
+                    { 1, new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3281), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3281), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
+                    { 2, new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3284), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3285), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
                 });
 
             migrationBuilder.InsertData(

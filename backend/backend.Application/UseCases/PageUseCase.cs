@@ -33,7 +33,7 @@ public class PageUseCase
         if (page == null) return null;
 
         return new PageDto
-        {
+        {   
             Id = page.Id,
             Title = page.Title,
             Content = page.Content,

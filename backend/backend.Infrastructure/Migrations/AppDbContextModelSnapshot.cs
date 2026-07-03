@@ -34,6 +34,9 @@ namespace backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("PageId")
                         .HasColumnType("integer");
 
@@ -47,6 +50,9 @@ namespace backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("Id");
 
                     b.ToTable("Blocks");
@@ -56,17 +62,21 @@ namespace backend.Infrastructure.Migrations
                         {
                             Id = 1,
                             Content = "Welcome to the workspace",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PageId = 1,
                             Position = 0m,
-                            Type = "Text"
+                            Type = "Text",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             Id = 2,
                             Content = "First block of the system",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PageId = 2,
                             Position = 1m,
-                            Type = "Text"
+                            Type = "Text",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -242,7 +252,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "Admin",
                             IsActive = true,
                             Lastname = "User",
-                            Password = "$2a$11$JD/Mg1TL6ahHkIg.8VdW3us2GQAPh49InSUldpzYMaHvUWq.lXRiy",
+                            Password = "$2a$11$QtCzwTca6kuyfgtFqMz9auVClMyI4KOL/ykCq/cCYOaEVHiNFeVL2",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "admin"
                         },
@@ -254,7 +264,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "User",
                             IsActive = true,
                             Lastname = "One",
-                            Password = "$2a$11$KpHQengsXXscBf9ytJt3FOhvarDOJoE21MolMvpA3i5aPmUGcgGyK",
+                            Password = "$2a$11$TU3oUI7seOba4rAr0MCJ4.b59HRCLG.sfl4qAJcw6ugKfZ9.z4nSa",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "user1"
                         });
@@ -339,18 +349,18 @@ namespace backend.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2264), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3281), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2264), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3281), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2266), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3284), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 12, 13, 2, 54, 861, DateTimeKind.Unspecified).AddTicks(2266), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 12, 57, 43, 257, DateTimeKind.Unspecified).AddTicks(3285), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });

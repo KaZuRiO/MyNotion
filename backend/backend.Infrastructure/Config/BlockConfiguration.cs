@@ -18,22 +18,22 @@ public class BlockConfiguration : IEntityTypeConfiguration<Block>
     builder.Property(x => x.Position)
             .HasColumnType("decimal(18,2)");
     builder.HasData(
-      new Block(
-          id: 1,
-          pageId: 1,
-          type: BlockType.Text,
-          position: 0m,
-          content: "Welcome to the workspace",
-          parentBlockId: null
-      ),
-      new Block(
-          id: 2,
-          pageId: 2,
-          type: BlockType.Text,
-          position: 1m,
-          content: "First block of the system",
-          parentBlockId: null
-      )
+      new Block{
+          Id= 1,
+          PageId= 1,
+          Type= BlockType.Text,
+          Position= 0m,
+          Content= "Welcome to the workspace",
+          ParentBlockId= null
+      },
+      new Block{
+          Id= 2,
+          PageId= 2,
+          Type= BlockType.Text,
+          Position= 1m,
+          Content= "First block of the system",
+          ParentBlockId= null
+      }
     );
   }
 }

@@ -24,7 +24,9 @@ public class BlockUseCase
             Type = block.Type,
             Content = block.Content,
             Position = block.Position,
-            ParentBlockId = block.ParentBlockId
+            ParentBlockId = block.ParentBlockId,
+            CreatedAt = block.CreatedAt,
+            UpdatedAt = block.UpdatedAt
         }).ToList();
     }
 
@@ -39,20 +41,25 @@ public class BlockUseCase
             Type = block.Type,
             Content = block.Content,
             Position = block.Position,
-            ParentBlockId = block.ParentBlockId
+            ParentBlockId = block.ParentBlockId,
+            CreatedAt = block.CreatedAt,
+            UpdatedAt = block.UpdatedAt
         };
     }
 
    
     public async Task<BlockDto> CreateBlockAsync(CreateBlockDto dto)
     {
-        var block = new Block(
-            dto.PageId,
-            dto.Type,
-            dto.Position,
-            dto.Content ?? "",
-            dto.ParentBlockId
-        );
+        var block = new Block
+        {
+            PageId = dto.PageId,
+            Type = dto.Type,
+            Position = dto.Position,
+            Content = dto.Content ?? "",
+            ParentBlockId = dto.ParentBlockId,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
 
         await _blockRepository.AddAsync(block);
 
@@ -63,7 +70,9 @@ public class BlockUseCase
             Type = block.Type,
             Content = block.Content,
             Position = block.Position,
-            ParentBlockId = block.ParentBlockId
+            ParentBlockId = block.ParentBlockId,
+            CreatedAt = block.CreatedAt,
+            UpdatedAt = block.UpdatedAt
         };
     }
     public async Task<BlockDto?> UpdateBlockAsync(int id, UpdateBlockDto dto)
@@ -75,6 +84,8 @@ public class BlockUseCase
         block.Position = dto.Position;
         block.Content = dto.Content ?? "";
         block.ParentBlockId = dto.ParentBlockId;
+        block.CreatedAt = block.CreatedAt;
+        block.UpdatedAt = DateTime.UtcNow;
 
         await _blockRepository.UpdateAsync(block);
 
@@ -85,7 +96,9 @@ public class BlockUseCase
             Type = block.Type,
             Content = block.Content,
             Position = block.Position,
-            ParentBlockId = block.ParentBlockId
+            ParentBlockId = block.ParentBlockId,
+            CreatedAt = block.CreatedAt,
+            UpdatedAt = block.UpdatedAt
         };
     }
 
@@ -109,7 +122,10 @@ public class BlockUseCase
             Type = block.Type,
             Content = block.Content,
             Position = block.Position,
-            ParentBlockId = block.ParentBlockId
+            ParentBlockId = block.ParentBlockId,
+            CreatedAt = block.CreatedAt,
+            UpdatedAt = block.UpdatedAt
+
         }).ToList();
     }
 
