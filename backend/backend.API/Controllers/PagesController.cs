@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using backend.Application.DTOs.Page;
 
 [Route("api/[controller]")]
-public class PageController : Controller
+public class PagesController : Controller
 {
   private readonly PageUseCase _pageUsecase;
-  public PageController(PageUseCase pageUsecase)
+  public PagesController(PageUseCase pageUsecase)
   {
     _pageUsecase = pageUsecase;
   }

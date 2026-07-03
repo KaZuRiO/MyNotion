@@ -22,6 +22,64 @@ namespace backend.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("backend.Domain.Entities.Block", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PageId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ParentBlockId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Position")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blocks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Welcome to the workspace",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PageId = 1,
+                            Position = 0m,
+                            Type = "Text",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "First block of the system",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PageId = 2,
+                            Position = 1m,
+                            Type = "Text",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
+                });
+
             modelBuilder.Entity("backend.Domain.Entities.Page", b =>
                 {
                     b.Property<int>("Id")
@@ -194,7 +252,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "Admin",
                             IsActive = true,
                             Lastname = "User",
-                            Password = "$2a$11$r8hPXXt8Iyv34OckGMhnlOz5juS.73hG3KEaPyF1FgRvMH2uTDP8S",
+                            Password = "$2a$11$wjcOEXjX7QVjmaV5A2jqZepu2znJKuqf5KyAOpSpYLK0ef/2wcn2y",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "admin"
                         },
@@ -206,7 +264,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "User",
                             IsActive = true,
                             Lastname = "One",
-                            Password = "$2a$11$7m6wpwjN8jmngh.9h2nYJOsfgf3OXWRfiSKoYe1g9R8Ot7crIwXDe",
+                            Password = "$2a$11$6tE6PkTNOCj1HyCtyJGaDeZhbfNAWbwl5ovlXRenvtiGp3AkG8VZK",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "user1"
                         });
@@ -291,18 +349,18 @@ namespace backend.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5305), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4415), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5306), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4416), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5309), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 6, 4, 12, 53, 48, 200, DateTimeKind.Unspecified).AddTicks(5309), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });

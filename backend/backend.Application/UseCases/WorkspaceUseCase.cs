@@ -21,6 +21,7 @@ public class WorkspaceUseCase
             Id = workspace.Id,
             Name = workspace.Name,
             Description = workspace.Description,
+            UserId = workspace.UserId,
             CreatedAt = workspace.CreatedAt,
             UpdatedAt = workspace.UpdatedAt
         });
@@ -34,6 +35,7 @@ public class WorkspaceUseCase
             Id = workspace.Id,
             Name = workspace.Name,
             Description = workspace.Description,
+            UserId = workspace.UserId,
             CreatedAt = workspace.CreatedAt,
             UpdatedAt = workspace.UpdatedAt
         };
@@ -45,6 +47,7 @@ public class WorkspaceUseCase
         {
             Name = createWorkspaceDto.Name,
             Description = createWorkspaceDto.Description,
+            UserId = createWorkspaceDto.UserId,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -54,6 +57,7 @@ public class WorkspaceUseCase
             Id = workspace.Id,
             Name = workspace.Name,
             Description = workspace.Description,
+            UserId = workspace.UserId,
             CreatedAt = workspace.CreatedAt,
             UpdatedAt = workspace.UpdatedAt
         };
@@ -73,6 +77,7 @@ public class WorkspaceUseCase
             Id = workspace.Id,
             Name = workspace.Name,
             Description = workspace.Description,
+            UserId = workspace.UserId,
             CreatedAt = workspace.CreatedAt,
             UpdatedAt = workspace.UpdatedAt
         };

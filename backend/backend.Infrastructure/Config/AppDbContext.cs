@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
   public DbSet<Page> Pages => Set<Page>();
   public DbSet<Role> Roles => Set<Role>();
   public DbSet<WorkspaceUser> WorkspaceUsers => Set<WorkspaceUser>();
+  public DbSet<Block> Blocks => Set<Block>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
