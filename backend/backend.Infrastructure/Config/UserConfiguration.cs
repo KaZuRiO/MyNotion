@@ -13,6 +13,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         {
           Id = 1,
           Username = "admin",
+          Firstname = "Admin",
+          Lastname = "User",
           Email = "admin@example.com",
           Password = BCrypt.Net.BCrypt.HashPassword("test"),
           AvatarUrl = null,
@@ -24,6 +26,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         {
           Id = 2,
           Username = "user1",
+          Firstname = "User",
+          Lastname = "One",
           Email = "user1@example.com",
           Password = BCrypt.Net.BCrypt.HashPassword("test"),
           AvatarUrl = null,
