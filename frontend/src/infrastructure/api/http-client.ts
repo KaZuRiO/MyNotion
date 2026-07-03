@@ -1,3 +1,5 @@
+import { LocalStorageTokenStorage } from "@/infrastructure/storage/local-storage-token-storage";
+
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {},
@@ -5,8 +7,7 @@ export async function apiFetch<T>(
   const baseUrl =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
-  // Get token from localStorage (assuming it's stored there)
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const token = new LocalStorageTokenStorage().get();
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
