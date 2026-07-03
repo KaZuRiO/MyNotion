@@ -4,9 +4,11 @@ using backend.Domain.Entities;
 using backend.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using backend.Application.DTOs.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/[controller]")]
 [ApiController]
+
 public class AuthController : Controller
 {
   private readonly AuthUseCase _authUsecase;
@@ -15,7 +17,7 @@ public class AuthController : Controller
   {
     _authUsecase = authUsecase;
   }
-
+  [AllowAnonymous]
   [HttpPost("Login")]
   public async Task<IActionResult> LoginUser(LoginUserDto loginUserDto)
   {
@@ -31,7 +33,7 @@ public class AuthController : Controller
       return StatusCode(500, "An error occurred while logging in: " + ex.Message);
     }
   }
-
+  [AllowAnonymous]
   [HttpPost("Register")]
   public async Task<IActionResult> RegisterUser(RegisterUserDto registerUserDto)
   {
