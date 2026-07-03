@@ -1,60 +1,53 @@
-# =========================================
-# Stage 1: Base image with dependencies
-# =========================================
+FROM node:22-alpine AS base
 
-# Use a lightweight DHI Node.js image for building
-FROM node:lts-alpine AS base
-
-# Set the working directory inside the container
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-
-# Copy package-related files first to leverage Docker's caching mechanism
 COPY package.json package-lock.json* ./
+RUN npm ci
 
-# Install project dependencies using npm ci (ensures a clean, reproducible install)
-RUN --mount=type=cache,target=/root/.npm npm ci
-
-# =========================================
-# Stage 2: Development stage
-# =========================================
-
+# Development stage
 FROM base AS dev
 WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-EXPOSE 4200
-# Run ng serve with the host 0.0.0.0 to make it accessible outside the container
-CMD ["npm", "start", "--", "--host", "0.0.0.0"]
+ENV NODE_ENV=development
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
 
-# =========================================
-# Stage 3: Build stage for production
-# =========================================
-
+# Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-# Copy the rest of the application source code into the container
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Build the Angular application
 RUN npm run build
 
-# =========================================
-# Stage 4: Prepare Nginx to Serve Static Files
-# =========================================
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
 
-FROM dhi.io/nginx:1.28.0-alpine3.21-dev AS runner
+ENV NODE_ENV=production
 
-# Copy custom Nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy the static build output from the build stage to Nginx's default HTML serving directory
-COPY --chown=nginx:nginx --from=builder /app/dist/*/browser /usr/share/nginx/html
+COPY --from=builder /app/public ./public
 
-# Use a non-root user for security best practices
-USER nginx
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
-# Expose port 8080 to allow HTTP traffic
-# Note: The default Nginx container now listens on port 8080 instead of 80
-EXPOSE 8080
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Start Nginx directly with custom config
-ENTRYPOINT ["nginx", "-c", "/etc/nginx/nginx.conf"]
-CMD ["-g", "daemon off;"]
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "server.js"]

@@ -7,7 +7,7 @@ services:
       target: dev
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "3001:5000"
     environment:
       - ASPNETCORE_URLS=http://+:5000 
       - ASPNETCORE_ENVIRONMENT=Development
@@ -29,15 +29,15 @@ services:
       target: dev
       dockerfile: Dockerfile
     ports:
-      - "4200:4200"
+      - "3000:3000"
     volumes:
       - ./frontend:/app:z
       - /app/node_modules
+      - /app/.next
     networks:
       - frontend
       - backend
-    restart:
-      unless-stopped
+    restart: unless-stopped
   
   postgres:
     image: postgres:latest
