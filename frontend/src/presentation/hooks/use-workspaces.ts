@@ -17,7 +17,7 @@ export function useWorkspaces() {
         setWorkspaces(data);
       } catch (err) {
         setError(
-          err instanceof Error ? err : new Error("Failed to fetch workspaces")
+          err instanceof Error ? err : new Error("Failed to fetch workspaces"),
         );
       } finally {
         setLoading(false);

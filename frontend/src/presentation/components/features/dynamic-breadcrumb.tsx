@@ -9,7 +9,7 @@ export function DynamicBreadcrumb() {
   const { workspaces, loading } = useWorkspaces();
 
   const workspaceId = params?.workspaceId as string;
-  
+
   if (loading) {
     return <BreadcrumbPage className="line-clamp-1">Loading...</BreadcrumbPage>;
   }
