@@ -6,6 +6,8 @@ services:
       context: ./backend
       target: dev
       dockerfile: Dockerfile
+    depends_on:
+      - postgres
     ports:
       - "3001:5000"
     environment:

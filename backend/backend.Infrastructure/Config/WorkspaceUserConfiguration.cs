@@ -14,14 +14,18 @@ public class WorkspaceUserConfiguration : IEntityTypeConfiguration<WorkspaceUser
           Id = 1,
           WorkspaceId = 1,
           UserId = 1,
-          RoleId = 1
+          RoleId = 1,
+          CreatedAt = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero),
+          UpdatedAt = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero)
         },
         new WorkspaceUser
         {
           Id = 2,
           WorkspaceId = 1,
           UserId = 2,
-          RoleId = 2
+          RoleId = 2,
+          CreatedAt = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero),
+          UpdatedAt = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero)
         }
     );
   }
