@@ -19,6 +19,8 @@ public class UserUseCase
         {
             Id = user.Id,
             Username = user.Username,
+            Firstname = user.Firstname,
+            Lastname = user.Lastname,
             Email = user.Email,
             AvatarUrl = user.AvatarUrl,
             CreatedAt = user.CreatedAt,
@@ -34,6 +36,8 @@ public class UserUseCase
         {
             Id = user.Id,
             Username = user.Username,
+            Firstname = user.Firstname,
+            Lastname = user.Lastname,
             Email = user.Email,
             AvatarUrl = user.AvatarUrl,
             CreatedAt = user.CreatedAt,
@@ -47,6 +51,8 @@ public class UserUseCase
         {
             Username = dto.Username,
             Email = dto.Email,
+            Firstname = dto.Firstname,
+            Lastname = dto.Lastname,
             AvatarUrl = dto.AvatarUrl,
             Password = dto.Password,
             CreatedAt = dto.CreatedAt,
@@ -58,6 +64,8 @@ public class UserUseCase
             {
                 Username = user.Username,
                 Email = user.Email,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
                 AvatarUrl = user.AvatarUrl,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
@@ -72,6 +80,8 @@ public class UserUseCase
         if (user == null) return null;
         user.Username = dto.Username;
         user.Email = dto.Email;
+        user.Firstname = dto.Firstname;
+        user.Lastname = dto.Lastname;
         user.AvatarUrl = dto.AvatarUrl;
         user.Password = dto.Password;
         user.UpdatedAt = DateTimeOffset.UtcNow;
@@ -80,6 +90,8 @@ public class UserUseCase
         {
             Id = user.Id,
             Username = user.Username,
+            Firstname = user.Firstname,
+            Lastname = user.Lastname,
             Email = user.Email,
             AvatarUrl = user.AvatarUrl,
             CreatedAt = user.CreatedAt,
