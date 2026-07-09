@@ -188,8 +188,8 @@ namespace backend.Infrastructure.Migrations
                 columns: new[] { "Id", "AvatarUrl", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "UpdatedAt", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin@example.com", "Admin", true, "User", "$2a$11$wjcOEXjX7QVjmaV5A2jqZepu2znJKuqf5KyAOpSpYLK0ef/2wcn2y", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin" },
-                    { 2, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1@example.com", "User", true, "One", "$2a$11$6tE6PkTNOCj1HyCtyJGaDeZhbfNAWbwl5ovlXRenvtiGp3AkG8VZK", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1" }
+                    { 1, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin@example.com", "Admin", true, "User", "$2a$11$VwicNuYDsGwmmD.gu5XcUOIhEPhWN.8m3CNrqFZL2A.miC0tBk4Oy", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "admin" },
+                    { 2, null, new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1@example.com", "User", true, "One", "$2a$11$fiSktqtzdzVYGAr23Y2n4ete/Df8jSTRqR0TtQq5ZNXoWGc8M93FG", new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "user1" }
                 });
 
             migrationBuilder.InsertData(
@@ -207,8 +207,8 @@ namespace backend.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "RoleId", "UpdatedAt", "UserId", "WorkspaceId" },
                 values: new object[,]
                 {
-                    { 1, new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4415), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4416), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
-                    { 2, new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
+                    { 1, new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5167), new TimeSpan(0, 0, 0, 0, 0)), 1, new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5167), new TimeSpan(0, 0, 0, 0, 0)), 1, 1 },
+                    { 2, new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5728), new TimeSpan(0, 0, 0, 0, 0)), 2, new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5729), new TimeSpan(0, 0, 0, 0, 0)), 2, 1 }
                 });
 
             migrationBuilder.InsertData(

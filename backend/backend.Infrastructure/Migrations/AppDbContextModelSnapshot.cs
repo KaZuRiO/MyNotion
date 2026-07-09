@@ -17,7 +17,7 @@ namespace backend.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "10.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -252,7 +252,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "Admin",
                             IsActive = true,
                             Lastname = "User",
-                            Password = "$2a$11$wjcOEXjX7QVjmaV5A2jqZepu2znJKuqf5KyAOpSpYLK0ef/2wcn2y",
+                            Password = "$2a$11$VwicNuYDsGwmmD.gu5XcUOIhEPhWN.8m3CNrqFZL2A.miC0tBk4Oy",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "admin"
                         },
@@ -264,7 +264,7 @@ namespace backend.Infrastructure.Migrations
                             Firstname = "User",
                             IsActive = true,
                             Lastname = "One",
-                            Password = "$2a$11$6tE6PkTNOCj1HyCtyJGaDeZhbfNAWbwl5ovlXRenvtiGp3AkG8VZK",
+                            Password = "$2a$11$fiSktqtzdzVYGAr23Y2n4ete/Df8jSTRqR0TtQq5ZNXoWGc8M93FG",
                             UpdatedAt = new DateTimeOffset(new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
                             Username = "user1"
                         });
@@ -349,18 +349,18 @@ namespace backend.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4415), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5167), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 1,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4416), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5167), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 1,
                             WorkspaceId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5728), new TimeSpan(0, 0, 0, 0, 0)),
                             RoleId = 2,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 3, 13, 16, 54, 283, DateTimeKind.Unspecified).AddTicks(4419), new TimeSpan(0, 0, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2026, 7, 9, 9, 17, 16, 964, DateTimeKind.Unspecified).AddTicks(5729), new TimeSpan(0, 0, 0, 0, 0)),
                             UserId = 2,
                             WorkspaceId = 1
                         });

@@ -16,6 +16,9 @@ services:
       - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB};Username=${USER_POSTGRES};Password=${PASSWORD_POSTGRES}
     volumes:
       - ./backend:/src:z
+      - ./backend_bin:/src/**/bin
+      - ./backend_obj:/src/**/obj
+
     command: dotnet watch run --urls=http://+:5000
     networks:
       - backend

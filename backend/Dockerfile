@@ -1,16 +1,16 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS dev
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dev
 ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "watch", "run", "--project", "backend.API/backend.API.csproj", "--non-interactive"]
 
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER $APP_UID
 WORKDIR /app
 
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["backend.sln", "backend.sln"]
